@@ -17,6 +17,8 @@ import {
   Menu,
   X,
 } from 'lucide-react'
+import ReelsCarousel from './ReelsCarousel'
+import YoutubeCarousel from './YoutubeCarousel'
 
 const App = () => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -103,7 +105,7 @@ const App = () => {
       />
       <style>{`
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; color: white; }
+        body { font-family: 'Inter', sans-serif; color: white; overflow-x: hidden; }
 
         .App {
           min-height: 100vh;
@@ -680,6 +682,132 @@ const App = () => {
           .footer { padding: 60px 0 30px; }
           .footer h2 { font-size: 1.4rem; }
         }
+
+        /* Carousel Styles */
+        .carousel-stage {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+          margin-bottom: 28px;
+          overflow: hidden;
+          width: 100%;
+        }
+        .reel-slot {
+          position: relative;
+          border-radius: 16px;
+          overflow: hidden;
+          flex-shrink: 0;
+          transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .reel-center {
+          width: 340px;
+          z-index: 2;
+          box-shadow: 0 0 60px rgba(255,0,0,0.2);
+          border: 1px solid rgba(255,100,0,0.25);
+        }
+        .reel-side {
+          width: 255px;
+          opacity: 0.35;
+          transform: scale(0.93);
+        }
+        .reel-side:hover { opacity: 0.55; }
+        .reel-overlay {
+          position: absolute;
+          inset: 0;
+          z-index: 3;
+          background: transparent;
+        }
+        .carousel-iframe {
+          width: 100%;
+          height: 620px;
+          display: block;
+        }
+        .carousel-controls {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 24px;
+        }
+        .carousel-button {
+          background: rgba(255,0,0,0.6);
+          border: none;
+          color: white;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.3s ease;
+        }
+        .carousel-button:hover { background: #FF0000; }
+        .carousel-dots {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+        }
+        .carousel-dots .dot {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.3);
+          border: none;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+        .carousel-dots .dot.active {
+          background: #FF0000;
+          width: 36px;
+          border-radius: 5px;
+        }
+        @media (max-width: 768px) {
+          .reel-side { display: none; }
+          .reel-center { width: min(320px, calc(100vw - 40px)); }
+          .carousel-iframe { height: 568px; }
+        }
+        @media (max-width: 480px) {
+          .reel-center { width: min(260px, calc(100vw - 40px)); }
+          .carousel-iframe { height: 462px; }
+        }
+
+        /* YouTube Carousel Styles */
+        .video-slot {
+          position: relative;
+          border-radius: 16px;
+          overflow: hidden;
+          flex-shrink: 0;
+          transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .video-center {
+          width: 480px;
+          z-index: 2;
+          box-shadow: 0 0 60px rgba(255,0,0,0.2);
+          border: 1px solid rgba(255,100,0,0.25);
+        }
+        .video-side {
+          width: 360px;
+          opacity: 0.35;
+          transform: scale(0.93);
+        }
+        .video-side:hover { opacity: 0.55; }
+        .video-overlay {
+          position: absolute;
+          inset: 0;
+          z-index: 3;
+          background: transparent;
+        }
+        .youtube-carousel .carousel-iframe { height: 270px; }
+        @media (max-width: 768px) {
+          .video-side { display: none; }
+          .video-center { width: min(360px, calc(100vw - 40px)); }
+          .youtube-carousel .carousel-iframe { height: 202px; }
+        }
+        @media (max-width: 480px) {
+          .video-center { width: min(280px, calc(100vw - 40px)); }
+          .youtube-carousel .carousel-iframe { height: 157px; }
+        }
       `}</style>
 
       {/* ─── Header ─── */}
@@ -898,6 +1026,8 @@ const App = () => {
         </div>
       </section>
 
+      <YoutubeCarousel />
+
       {/* ─── Content + Features Section ─── */}
       <section id="atractivo" className="section">
         <div className="container">
@@ -977,6 +1107,8 @@ const App = () => {
           </motion.div>
         </div>
       </section>
+
+      <ReelsCarousel />
 
       {/* ─── Packages Section ─── */}
       <section
